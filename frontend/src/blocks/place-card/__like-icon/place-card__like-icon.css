@@ -1,0 +1,13 @@
+.place-card__like-icon {
+    background: url(../../../images/like-icon.svg) center no-repeat;
+    background-color: transparent;
+    border: none;
+    min-width: 22px;
+    height: 19px;
+    cursor: pointer;
+    transition: opacity .3s linear;
+}
+
+.place-card__like-icon:hover {
+    opacity: 50%;
+}

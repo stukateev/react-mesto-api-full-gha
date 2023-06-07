@@ -1,0 +1,17 @@
+.popup-image__img {
+    display: block;
+    max-width: 75vw;
+    max-height: 40vw;
+
+    /* на stackoverflow писали, что с рендером качество картинок станет чуть лучше, но разницы осоюо не заметил*/
+    image-rendering: -moz-crisp-edges; /* Firefox */
+    -ms-interpolation-mode: nearest-neighbor;  /* IE */
+}
+
+@media screen and (max-width: 320px) {
+    .popup-image__img {
+        width:240px;
+        height: auto;
+
+    }
+}

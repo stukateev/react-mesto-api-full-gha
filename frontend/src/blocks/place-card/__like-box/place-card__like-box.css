@@ -1,0 +1,9 @@
+.place-card__like-box {
+    border: none;
+    min-width: 22px;
+    min-height: 35px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+

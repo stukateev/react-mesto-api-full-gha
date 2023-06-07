@@ -1,0 +1,18 @@
+.user-info__photo-button {
+    background: transparent;
+    border: none;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: .5s;
+    cursor: pointer;
+}
+.user-info__photo-button:hover{
+    background-color: rgba(0, 0, 0, 0.8);
+    background-image: url(../../../images/pen.svg);
+}
+
+

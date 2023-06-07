@@ -1,0 +1,21 @@
+.user-info__data {
+    width: 336px;
+    margin-left: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right:auto;
+    align-self: center;
+    margin-top: 0;
+
+}
+
+@media screen and (max-width: 1050px) {
+    .user-info__data {
+        width: 282px;
+
+        margin: 26px 0 32px;
+        text-align: center;
+        justify-content: center;
+
+    }
+}

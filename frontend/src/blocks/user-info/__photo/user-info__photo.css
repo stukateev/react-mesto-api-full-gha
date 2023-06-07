@@ -1,0 +1,15 @@
+.user-info__photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-image: url(../../../images/mriazinpachka.png);
+}
+
+@media screen and (max-width: 1050px) {
+    .user-info__photo {
+        margin-top: 42px;
+
+    }
+}

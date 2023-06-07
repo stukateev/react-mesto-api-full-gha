@@ -1,0 +1,18 @@
+.user-info__job {
+    margin: 6px 0 0 0;
+    font-family: 'Inter-Regular', serif;
+    font-size: 18px;
+    line-height: 22px;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1050px) {
+    .user-info__job {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

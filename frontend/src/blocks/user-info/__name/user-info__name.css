@@ -1,0 +1,21 @@
+.user-info__name {
+    font-family: 'Inter-Medium', sans-serif;
+    margin: 0;
+    font-weight: normal;
+    font-size: 42px;
+    line-height: 48px;
+    width: 294px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 1050px) {
+    .user-info__name {
+        margin-left: 28px;
+        width: 189px;
+        font-size: 27px;
+        line-height: 33px;
+    }
+}

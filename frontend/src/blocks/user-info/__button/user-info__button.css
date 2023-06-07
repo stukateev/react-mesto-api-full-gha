@@ -1,0 +1,28 @@
+.user-info__button {
+    margin-left:auto;
+    width: 150px;
+    height: 50px;
+    font-size: 30px;
+    border: 2px solid #FFFFFF;
+    border-radius: 2px;
+    transition: opacity .3s linear;
+    background-image: url("../../../images/new_tab.svg");
+    background-size: 22px 22px;
+    background-position: center;
+    background-repeat: no-repeat;
+    align-self: center;
+
+}
+.user-info__button:hover{
+    opacity: 60%;
+}
+@media screen and (max-width: 1050px) {
+    .user-info__button {
+        margin-left:0;
+        position: static;
+        margin-bottom: 36px;
+        width: 282px;
+        background-size: 16px 16px;
+
+    }
+}

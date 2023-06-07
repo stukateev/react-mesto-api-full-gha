@@ -1,0 +1,27 @@
+.user-info__edit {
+    background-image: url("../../../images/info-edit.svg");
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    background-position: center;
+    border: 1px solid white;
+    color:white;
+    width: 24px;
+    height: 24px;
+    margin-top: 14px;
+    margin-left: 18px;
+    transition: opacity linear .3s;
+
+}
+
+@media screen and (max-width: 1050px) {
+    .user-info__edit {
+        margin: 8px 0 0 10px;
+        width: 18px;
+        height: 18px;
+        background-size: 8px 8px;
+
+    }
+}
+.user-info__edit:hover {
+    opacity: 60%;
+}

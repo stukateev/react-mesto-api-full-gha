@@ -1,0 +1,16 @@
+.popup-auth__title {
+    font-size: 24px;
+    line-height: 29px;
+    margin: 0;
+    text-align: center;
+    padding-bottom: 23px;
+    font-family: 'Inter-Black', sans-serif;
+    font-weight: 900;
+}
+@media screen and (max-width: 320px){
+    .popup-auth__title{
+        line-height: 24px;
+        font-size: 20px;
+        padding: 0 0 25px;
+    }
+}
