@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const routes = require('./routes');
 require('dotenv').config();
-
+const cors = require('./middlewares/cors');
 const { PORT = 3000, DB_PATH = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 
@@ -30,6 +30,7 @@ app.use(routes);
 app.use(errors());
 app.use(errorLogger);
 app.use(errorsHandler);
+app.use(cors);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
