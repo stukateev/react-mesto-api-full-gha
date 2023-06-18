@@ -24,7 +24,6 @@ export default function App() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
-    const [token, setToken] = useState(null);
     const [email, setEmail] = useState(null);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
@@ -48,19 +47,13 @@ export default function App() {
             });}
     }, [loggedIn])
 
-    function handleAuth(data, operationType) {
-        const authFn = operationType === 'login' ? auth.authorization(data) : auth.registration(data);
-        authFn
+    function handleAuth(data) {
+        auth
+            .authorization(data)
             .then((res) => {
-                if (operationType === 'login') {
-                    localStorage.setItem("token", res.token);
-                    setLoggedIn(true);
-                    navigate('/');
-                } else if (operationType === 'register') {
-                    navigate('/sign-in');
-                    setIsSuccess(true);
-                    handleIsInfoPopupOpen();
-                }
+                localStorage.setItem('Authorized', 'true')
+                setLoggedIn(true);
+                navigate('/');
             })
             .catch((err) => {
                 setIsSuccess(false);
@@ -69,10 +62,25 @@ export default function App() {
             });
     }
 
+    function handleRegisterUser(data) {
+        auth
+            .registration(data)
+            .then(() => {
+                navigate('/sign-in');
+                setIsSuccess(true);
+                handleIsInfoPopupOpen();
+            })
+            .catch((err) => {
+                setIsSuccess(false);
+                handleIsInfoPopupOpen();
+                console.log(err);
+            })
+    }
+
     function checkAuthorization() {
-        setToken(localStorage.getItem("token"))
+        const token = localStorage.getItem('Authorized')
         if (token) {
-            auth.checkToken(token)
+            auth.checkToken()
                 .then((res) => {
                     navigate('/', { replace: true })
                     setEmail(res.data.email);
@@ -83,9 +91,9 @@ export default function App() {
     }
 
     function signOut() {
-        localStorage.removeItem("token")
+        localStorage.removeItem('Authorized')
         setLoggedIn(false)
-        setToken('')
+
         setEmail('')
         navigate('/sign-in',)
     }
@@ -177,7 +185,7 @@ export default function App() {
                     <Route path="/sign-in"
                            element={<Login handleLogin={handleAuth}></Login>}/>
                     <Route path="/sign-up"
-                           element={<Register handleRegister={handleAuth}></Register>}/>
+                           element={<Register handleRegister={ handleRegisterUser}></Register>}/>
                     <Route path={'/'}
                            element={
                         <ProtectedRoute

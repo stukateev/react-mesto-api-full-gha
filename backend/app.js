@@ -18,18 +18,8 @@ const {
   validationLogin,
 } = require('./middlewares/validations');
 
-app.use(bodyParser.json());
-app.use(cookieParser());
-
-app.post('/signin', validationLogin, login);
-app.post('/signup', validationCreateUser, createUser);
-
+app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-app.use(auth);
-app.use(routes);
-app.use(errors());
-app.use(errorLogger);
-app.use(errorsHandler);
 app.use(cors);
 
 app.get('/crash-test', () => {
@@ -37,6 +27,18 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.post('/signin', validationLogin, login);
+app.post('/signup', validationCreateUser, createUser);
+
+app.use(auth);
+app.use(routes);
+app.use(errors());
+app.use(errorLogger);
+app.use(errorsHandler);
 
 mongoose.connect(DB_PATH);
 

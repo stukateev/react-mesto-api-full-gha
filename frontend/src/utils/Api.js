@@ -78,9 +78,9 @@ class Api {
 }
 
 export  const api = new Api({
-    baseUrl: 'https://api.idler.studio.nomoredomains.rocks/',
+    baseUrl: 'https://api.idler.studio.nomoredomains.rocks',
     headers: {
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-Type': 'application/json'
-    }
+        'Content-Type': 'application/json',
+    },
+    credentials : 'include',
 });

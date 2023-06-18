@@ -1,6 +1,6 @@
 class Auth {
     constructor() {
-        this._baseURL = 'https://api.idler.studio.nomoredomains.rocks/'
+        this._baseURL = 'https://api.idler.studio.nomoredomains.rocks'
         this._headers = {'Content-Type': 'application/json'}
     }
     _checkResponse(res){
@@ -20,6 +20,7 @@ class Auth {
             }),
         })
             .then(this._checkResponse)
+
     }
     registration(data) {
         return fetch(`${this._baseURL}/signup`, {
@@ -35,10 +36,12 @@ class Auth {
 
     checkToken(token) {
         return fetch(`${this._baseURL}/users/me`, {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                "Authorization": token,
+                "Content-Type": "application/json"
             },
+            credentials: 'include'
         })
             .then(this._checkResponse)
     }
