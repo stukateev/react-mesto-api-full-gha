@@ -120,6 +120,15 @@ const login = (req, res, next) => {
       handleError(err, next);
     });
 };
+const clearCookie = (req, res, next) => {
+  try {
+    res.clearCookie('jwt').send({ message: 'Cookie clear' });
+  } catch (err) {
+    next(err);
+  }
+}
+
+
 
 module.exports = {
   getUsers,
@@ -129,4 +138,5 @@ module.exports = {
   updateAvatar,
   getCurrentUser,
   login,
+  clearCookie
 };

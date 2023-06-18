@@ -11,7 +11,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from './Login';
 import Register from './Register';
-import { auth } from '../utils/Auth';
+import * as auth from '../utils/Auth';
 import ProtectedRoute from './ProtectedRoute'
 import { api } from "../utils/Api";
 import { Route, Routes, useNavigate} from 'react-router-dom'
@@ -49,11 +49,14 @@ export default function App() {
 
     function handleAuth(data) {
         auth
-            .authorization(data)
+            .authorization(data.email, data.password)
             .then((res) => {
-                localStorage.setItem('Authorized', 'true')
-                setLoggedIn(true);
-                navigate('/');
+                if(res){
+                    localStorage.setItem('Authorized', 'true')
+                    setLoggedIn(true);
+                    navigate('/');
+                }
+
             })
             .catch((err) => {
                 setIsSuccess(false);
@@ -64,7 +67,7 @@ export default function App() {
 
     function handleRegisterUser(data) {
         auth
-            .registration(data)
+            .registration(data.email, data.password)
             .then(() => {
                 navigate('/sign-in');
                 setIsSuccess(true);
@@ -79,6 +82,7 @@ export default function App() {
 
     function checkAuthorization() {
         const token = localStorage.getItem('Authorized')
+
         if (token) {
             auth.checkToken()
                 .then((res) => {
@@ -93,7 +97,6 @@ export default function App() {
     function signOut() {
         localStorage.removeItem('Authorized')
         setLoggedIn(false)
-
         setEmail('')
         navigate('/sign-in',)
     }
@@ -110,9 +113,9 @@ export default function App() {
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
     }
-    function handleIsInfoPopupOpen  ()  {
+    function handleIsInfoPopupOpen() {
         setIsInfoPopupOpen(!isInfoPopupOpen);
-    };
+    }
     function closeAllPopups() {
         setIsEditAvatarPopupOpen(false);
         setIsAddPlacePopupOpen(false);

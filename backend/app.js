@@ -12,15 +12,17 @@ const app = express();
 const auth = require('./middlewares/auth');
 const errorsHandler = require('./middlewares/handleError');
 const { errorLogger, requestLogger } = require('./middlewares/loggerHandler');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, clearCookie } = require('./controllers/users');
 const {
   validationCreateUser,
   validationLogin,
 } = require('./middlewares/validations');
+app.use(cors);
 
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-app.use(cors);
+
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -33,7 +35,7 @@ app.use(cookieParser());
 
 app.post('/signin', validationLogin, login);
 app.post('/signup', validationCreateUser, createUser);
-
+app.post('/signout', clearCookie);
 app.use(auth);
 app.use(routes);
 app.use(errors());

@@ -1,50 +1,50 @@
-class Auth {
-    constructor() {
-        this._baseURL = 'https://api.idler.studio.nomoredomains.rocks'
-        this._headers = {'Content-Type': 'application/json'}
-    }
-    _checkResponse(res){
-        if(res.ok){
-            return res.json()
-        }
-        console.log(res);
-        return Promise.reject(`Бип-Буп-Бип! Что-то пошло не так. Статус: ${res.status} ${res}`)
-    }
-    authorization(data) {
-        return fetch(`${this._baseURL}/signin`, {
-            method: 'POST',
-            headers: this._headers,
-            body: JSON.stringify({
-                password: data.password,
-                email: data.email,
-            }),
-        })
-            .then(this._checkResponse)
+export const BASE_URL = 'https://api.idler.studio.nomoredomains.rocks';
 
-    }
-    registration(data) {
-        return fetch(`${this._baseURL}/signup`, {
-            method: 'POST',
-            headers: this._headers,
-            body: JSON.stringify({
-                password: data.password,
-                email: data.email,
-            })
-        })
-            .then(this._checkResponse)
-    }
-
-    checkToken(token) {
-        return fetch(`${this._baseURL}/users/me`, {
-            method: 'GET',
-            headers: {
-                "Authorization": token,
-                "Content-Type": "application/json"
-            },
-            credentials: 'include'
-        })
-            .then(this._checkResponse)
-    }
+function makeRequest(url, method, body) {
+const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
 }
-const auth = new Auth();
-export { auth }
+
+const config = {
+    method,
+    headers,
+    credentials: 'include'
+}
+
+if (body !== undefined) {
+    config.body = JSON.stringify(body)
+}
+
+function verifyResponse(res) {
+    if (!res.ok) {
+        return res.json().then(message => {
+            if (message.error) {
+                throw new Error(message.error)
+            }
+            if (message.message) {
+                throw new Error(message.message)
+            }
+        })
+    }
+    return res.json();
+}
+
+return fetch(`${BASE_URL}${url}`, config).then((res) => verifyResponse(res))
+}
+
+export const registration = (email, password) => {
+    return makeRequest('/signup', 'POST', { email, password })
+}
+
+export const authorization = (email, password) => {
+    return makeRequest('/signin', 'POST', { email, password })
+}
+
+export const checkToken = () => {
+    return makeRequest('/users/me', 'GET', undefined)
+}
+
+export const clearToken = () => {
+    return makeRequest('/signout', 'POST', undefined)
+}
