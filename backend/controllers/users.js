@@ -112,9 +112,11 @@ const login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
-          sameSite: true,
+          sameSite: "none",
+          secure: true,
         })
-        .send({ message: `Welcome back, ${user.name}` });
+        .json({ message: `Welcome back, ${user.name}` })
+
     })
     .catch((err) => {
       handleError(err, next);
@@ -127,8 +129,6 @@ const clearCookie = (req, res, next) => {
     next(err);
   }
 }
-
-
 
 module.exports = {
   getUsers,

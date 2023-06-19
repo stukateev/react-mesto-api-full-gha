@@ -1,4 +1,4 @@
- const Cards = require('../models/card');
+const Cards = require('../models/card');
 const { handleError, FORBIDDEN } = require('../utils/errors');
 
 const getCards = (req, res, next) => {

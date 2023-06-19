@@ -3,8 +3,8 @@ import { CurrentUserContext } from "../context/CurrentUserContext";
 
 export default function Card({ obj, onCardClick, onCardLike, onCardDelete }) {
     const { currentUser } = useContext(CurrentUserContext);
-    const isOwn = obj.owner._id === currentUser._id;
-    const isLiked = obj.likes.some(i =>  i._id === currentUser._id);
+    const isOwn = (obj.owner._id || obj.owner)  === currentUser._id;
+    const isLiked = obj.likes.some(i =>  i === currentUser._id);
     const cardLikesBtnClassname = `place-card__like-icon ${
         isLiked && "place-card__like-icon_activated"} `;
     function handleLikeClick() {

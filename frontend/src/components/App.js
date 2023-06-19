@@ -29,18 +29,19 @@ export default function App() {
     const [isSuccess, setIsSuccess] = useState(false);
     const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
-    useEffect(() => {checkAuthorization()});
+
     useEffect(() => {
         if (loggedIn) {
             navigate("/", { replace: true });
         }
     }, [loggedIn]);
     useEffect(() => {
+        checkAuthorization()
         if(loggedIn){
         Promise.all([api.getUserInfo(), api.getInitialCards()])
             .then(([user, cards]) => {
                 setCurrentUser(user);
-                setCards(cards);
+                setCards(cards.reverse());
             })
             .catch((error) => {
                 console.log(error);
@@ -52,7 +53,7 @@ export default function App() {
             .authorization(data.email, data.password)
             .then((res) => {
                 if(res){
-                    localStorage.setItem('Authorized', 'true')
+                    localStorage.setItem('token', 'true')
                     setLoggedIn(true);
                     navigate('/');
                 }
@@ -81,13 +82,13 @@ export default function App() {
     }
 
     function checkAuthorization() {
-        const token = localStorage.getItem('Authorized')
+        const token = localStorage.getItem('token')
 
         if (token) {
             auth.checkToken()
                 .then((res) => {
                     navigate('/', { replace: true })
-                    setEmail(res.data.email);
+                    setEmail(res.email);
                     setLoggedIn(true);
                 })
                 .catch((err) => console.log(err))
@@ -95,10 +96,10 @@ export default function App() {
     }
 
     function signOut() {
-        localStorage.removeItem('Authorized')
+        localStorage.removeItem('token')
         setLoggedIn(false)
         setEmail('')
-        navigate('/sign-in',)
+        navigate('/sign-in', { replace: true })
     }
 
     function handleCardClick(data) {
@@ -125,7 +126,7 @@ export default function App() {
     }
 
     function handleCardLike(card) {
-        const isLiked = card.likes.some((i) => i._id === currentUser._id);
+        const isLiked = card.likes.some((i) => i === currentUser._id);
 
             api.changeLikeCardStatus(card._id, !isLiked)
                 .then((newCard) => {
