@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const routes = require('./routes');
 const cors = require('./middlewares/cors');
+
 const { PORT = 3000, DB_PATH = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 
@@ -17,12 +18,12 @@ const {
   validationCreateUser,
   validationLogin,
 } = require('./middlewares/validations');
+
 app.use(cors);
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-
 
 app.get('/crash-test', () => {
   setTimeout(() => {

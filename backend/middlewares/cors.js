@@ -15,17 +15,17 @@ module.exports = (req, res, next) => {
   if (allowedCors.includes(origin)) {
     res.set({
       'Access-Control-Allow-Origin': origin,
-      'Access-Control-Allow-Credentials': true
+      'Access-Control-Allow-Credentials': true,
     });
   }
   if (method === 'OPTIONS') {
     res.set({
       'Access-Control-Allow-Methods': DEFAULT_ALLOWED_METHODS,
-      'Access-Control-Allow-Headers': requestHeaders
+      'Access-Control-Allow-Headers': requestHeaders,
     });
     res.end();
-    return
+    return;
   }
 
-  return next();
+  next();
 };
