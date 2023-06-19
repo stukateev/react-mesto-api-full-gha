@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
       jwt,
       NODE_ENV === 'production'
         ? JWT_SECRET
-        : '1ce9ec7dd68836579e4ffcb80e1ea34ae6e9707c6b36a0c247e501d339a5ec0b',
+        : 'secret_key_num',
     );
   } catch (err) {
     return  next (new UnauthorizedError('Authorization required'));
